@@ -17,6 +17,6 @@
 * 注意：
  - 本プログラムは、有料のGoogle Speech To Textを利用しています。本プログラムを動作させる際には、自身のGCPの設定が施されたフォルダ(config)を指定する必要があります。
  - ブラウザからマイク音源を取得するためには、ブラウザがChrome、また、サーバがhttpsである必要があります。httpのサーバにアクセスする場合には、以下のようなオプションでブラウザを起動してください。
-~~~
-open -a “/Applications/Google Chrome.app” --args --unsafely-treat-insecure-origin-as-secure=“http://localhost”
-~~~ 
+  ~~~
+  open -a “/Applications/Google Chrome.app” --args --unsafely-treat-insecure-origin-as-secure=“http://localhost”
+  ~~~ 
