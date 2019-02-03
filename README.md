@@ -7,7 +7,7 @@
   - 2: 以下のコマンドで、docker環境を構築する。
       ~~~
       docker-compose up  --force-recreate --build
-      ~~~ß
+      ~~~
   - 3: ブラウザから以下のサイトにアクセスする。
       http://localhost:3000/voice_report/ 
   - 4: 画面上の"connect"ボタンを押して話すと、音声解析されたテキストの内容が、手順2で利用したターミナルに表示されます。
