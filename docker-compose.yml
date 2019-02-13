@@ -3,7 +3,7 @@ services:
   service:
     build:
       context: .
-      dockerfile: Dockerfile_service
+      dockerfile: Dockerfile
     command: '/app/docker/service/start-server.sh'
     volumes:
       - .:/app
