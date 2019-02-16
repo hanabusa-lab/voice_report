@@ -8,3 +8,4 @@ __pycache__/
 # swap file
 *.swap
 
+word/word_to_similarity/model/
