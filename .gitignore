@@ -1,0 +1,10 @@
+# python
+__pycache__/
+
+# environments
+.env
+.venv/
+
+# swap file
+*.swap
+

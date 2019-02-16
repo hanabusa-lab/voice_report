@@ -1,0 +1,15 @@
+version: "2"
+services:
+  split_to_word:
+    image: iimuz/python-dev:v3.7.0-pipenv1
+    environment:
+      USER_ID: $USER_ID
+      GROUP_ID: $GROUP_ID
+      TZ: $TIME_ZONE
+    ports:
+      - 8080:8080
+    volumes:
+      - ./split_to_word:/src:rw
+    working_dir: /src
+    command: "bash -c 'pipenv install; pipenv run python main.py'"
+
