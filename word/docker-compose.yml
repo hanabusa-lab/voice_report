@@ -6,12 +6,16 @@ services:
       USER_ID: $USER_ID
       GROUP_ID: $GROUP_ID
       TZ: $TIME_ZONE
-    ports:
-      - 8080:8080
+    expose:
+      - 10080
     volumes:
       - ./split_to_word:/src:rw
     working_dir: /src
-    command: "bash -c 'pipenv install; pipenv run python main.py'"
+    command: >
+      bash -c '
+      pipenv install;
+      pipenv run python main.py;
+      '
 
   word_to_similarity:
     image: iimuz/python-dev:v3.7.0-pipenv1
@@ -19,11 +23,21 @@ services:
       USER_ID: $USER_ID
       GROUP_ID: $GROUP_ID
       TZ: $TIME_ZONE
-    ports:
-      - 8080:8080
+    expose:
+      - 20080
     volumes:
       - ./word_to_similarity:/src:rw
     working_dir: /src
-    command: bash
-    # command: "bash -c 'pipenv install; pipenv run python main.py'"
+    command: >
+      bash -c '
+      pipenv install;
+      pipenv run python main.py;
+      '
 
+  view:
+    image: nginx:1.15.8-alpine
+    ports:
+      - 8080:80
+    volumes:
+      - ./view/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./view/index.html:/var/www/index.html:ro

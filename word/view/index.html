@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Text Similarity</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Text Similarity</h1>
+      <input class="input" type="text" id="keyword" placeholder="Keyword">
+      <textarea class="textarea" id="text" placeholder="Input sentences."></textarea>
+      <a class="button is-primary" id="similarity">Similarity</a>
+      <div class="box" id="result" style="margin-top: 20px">Output</div>
+    </div>
+  </section>
+  <script>
+    document.getElementById('similarity').addEventListener("click", function () {
+      const url = '/split_to_word/';
+      const text = document.getElementById('text').value;
+      const keyword = document.getElementById('keyword').value;
+      document.getElementById('result').innerHTML = '';
+      fetch(url + '?' + 'message=' + text ,{
+        method: 'get',
+      })
+      .catch(err => console.log(err))
+      .then(response => {
+        console.log(response);
+        response.json().then(data => {
+          console.log(data);
+          if (response.ok) {
+            const url2 = '/word_to_similarity/';
+            const method = 'POST';
+            const obj = {
+              'key': keyword,
+              'message': data.words
+            };
+            const body = JSON.stringify(obj);
+            const headers = {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            };
+            fetch(url2, {method, headers, body}).then(res => {
+              console.log(res);
+              res.json().then(data2 => {
+                console.log(data2);
+                if (response.ok) {
+                  buff = 'keyword: ' + data2.key + '<br />';
+                  for (let i = 0; i < data2.similarity.length; i++) {
+                    buff += data2.similarity[i].similarity + ':  ' + data2.similarity[i].word + '<br />';
+                  }
+                  document.getElementById('result').innerHTML = buff;
+                }
+              })
+            })
+          }
+        });
+      });
+    }, false);
+  </script>
+  </body>
+</html>
