@@ -17,6 +17,25 @@
     </div>
   </section>
   <script>
+    function selectDocUsingSimilarity(doc, similarities) {
+      const sentences = doc.split('。');
+      let count = 0;
+      let sentence_sim = new Array(sentences.length);
+      sentence_sim.fill(0);
+      for (let i = 0; i < similarities.length; i++) {
+        if (similarities[i].word == '。') {
+          count++;
+          continue;
+        }
+
+        if (sentence_sim[count] < similarities[i].similarity) {
+          sentence_sim[count] = similarities[i].similarity;
+        }
+      }
+
+      return [sentences, sentence_sim];
+    }
+
     document.getElementById('similarity').addEventListener("click", function () {
       const url = '/split_to_word/';
       const text = document.getElementById('text').value;
@@ -47,9 +66,15 @@
               res.json().then(data2 => {
                 console.log(data2);
                 if (response.ok) {
-                  buff = 'keyword: ' + data2.key + '<br />';
-                  for (let i = 0; i < data2.similarity.length; i++) {
-                    buff += data2.similarity[i].similarity + ':  ' + data2.similarity[i].word + '<br />';
+                  sentences = selectDocUsingSimilarity(text, data2.similarity);
+                  buff = '';
+                  for (let i = 0; i < sentences[0].length; i++) {
+                    console.log(sentences[1][i], sentences[0][i]);
+                    if (sentences[1][i] < 0.5) {
+                      continue;
+                    }
+
+                    buff += sentences[0][i] + '。<br />';
                   }
                   document.getElementById('result').innerHTML = buff;
                 }
