@@ -1,6 +1,11 @@
 # python
 __pycache__/
 
+# environments
+.env
+.venv/
+
 # swap file
 *.swap
 
+word/word_to_similarity/model/
